@@ -21,7 +21,7 @@ communication and deny unauthorized access to a specific server.
 
 <p align="center">
 Network Diagram: <br/>
-<img src="https://i.imgur.com/62TgaWL.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/mimsy07/ACL/blob/main/ACL-screenshot.png" height="80%" width="80%"/>
 <br />
 <br />
 
