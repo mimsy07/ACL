@@ -2,8 +2,7 @@
 
 
 <h2>Description</h2>
-This repository contains a simulation created using CISCO PACKET TRACER. This project focus on implementing ACL, 
-Wherein I use two company networks, an ISP router and router acting as a servers.
+This repository contains a simulation created using CISCO PACKET TRACER. A project focused on implementing ACLs, in which I use two company networks, an ISP router, and 5 routers acting as servers.
 <br />
 
 
@@ -14,8 +13,7 @@ Wherein I use two company networks, an ISP router and router acting as a servers
 - <b>ISP: 20.30.10.0/24</b>
 - <b>Server Network: 200.10.20.0/24</b>
 
-ACLs are implemented on the router's CO-1 (company 1) and CO-2 (company 2).This ACL policies can be used to permit
-communication and deny unauthorized access to a specific server.
+Two types of ACLs are implemented on the router's CO-1 (Company 1) and CO-2 (Company 2). These ACL policies can be used to permit communication and deny unauthorized access to a specific server. 
 
 <h2>Project Walk through</h2>
 
