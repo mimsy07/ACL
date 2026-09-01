@@ -22,14 +22,14 @@ The network consists of two company networks, an ISP network, and 5 routers acti
 
 <h3>Key Skills Demonstrated</h3>
 
-- <b> CISCO IOS ACL configuration</b>
-- <b> Extended ACL implementation</b>
-- <b> ACL troubleshooting and verification</b>
-- <b> Testing connectivity</b>
-- <b> Assigning designated IP addresses to the interface</b> 
-- <b> Implementing EIGRP routing protocol</b>
-- <b> Configure passive interface, for router interface who's not sending hello message</b>
-- <b> Setup and configure SSH</b>
+-  CISCO IOS ACL configuration
+-  Extended ACL implementation
+-  ACL troubleshooting and verification
+-  Testing connectivity
+-  Assigning designated IP addresses to the interface
+-  Implementing EIGRP routing protocol
+-  Configure passive interface, for router interface who's not sending hello message
+-  Setup and configure SSH
 
 <h2>Project Walk through</h2>
 
@@ -38,6 +38,29 @@ Network Diagram: <br/>
 <img src="https://github.com/mimsy07/ACL/blob/main/ACL.png" height="80%" width="80%"/>
 <br />
 <br />
+
+---
+
+## Task
+
+|SCENARIO: IN CO-1 |
+|:-------------------|
+| 1. Allow R-PC to TELNET WEB-1 and WEB-2 |
+| 2. Allow R-PC to SSH WEB-1 and WEB-2 |
+| 3. Allow R-PC to HTTP WEB-1 and WEB-2 |
+| 4. Allow R-PC to HTTPS WEB-1 and WEB-2 |
+| 5. Allow network 192.168.10.0/24 to PING DNS-SERVER & SERVER-1 |
+| 6. Allow R-PC to PING, TELNET, SSH, HTTP, & HTTPS SERVER-1 |
+
+<br>
+
+|SCENARIO: IN CO-2 |
+|:-------------------|
+| 1. Allow USER_PC to TELNET INTERNAL_SERVER |
+| 2. Allow USER_PC to SSH INTERNAL_SERVER |
+| 3. Allow USER_PC to HTTP INTERNAL_SERVER |
+| 4. Allow USER_PC to HTTPS INTERNAL_SERVER |
+| 5. Allow USER_PC to PING entire network 172.16.10.0/24 |
  
 ## Configurations
 
@@ -71,7 +94,6 @@ interface GigabitEthernet0/1
 ip access-group 150 out
 exit
 ```
-
 <h4><b>EIGRP ROUTING PROTOCOL</b></h4>
 
 ```
@@ -83,7 +105,6 @@ router eigrp 100
  network 20.30.10.0 0.255.255.255.0
  no auto-summary
  exit
-
 ```
 <h3><b>CO-2</b></h3>
 
@@ -118,15 +139,120 @@ router eigrp 100
 <h4><b>IMPLEMENTING SSH TO INTERNAL-SERVER (CO-2)</b></h4>
 
 ```
-username admin secret cisco
+username admin secret cisco            //secret for md5 security
 ip domain-name internal-server.com
 crypto key generate rsa
-1024
+1024                                   //for encryption
 ip ssh version2
 
 line vty 0 4
 login local
-transport input all       //to accept both telnet and ssh
+transport input all                  //to accept both telnet and ssh
+exit
+```
+
+<h3><b>DNS-SERVER</b></h3>
+
+<h4><b>EIGRP ROUTING PROTOCOL</b></h4>
+
+```
+router eigrp 100
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ network 200.10.20.0 255.255.255.0
+exit
+
+```
+
+<h4><b>SSH</b></h4>
+
+```
+username admin secret cisco        //secret for md5 security
+ip domain-name DNS-Server.com
+crypto key generate rsa
+1024                              //for encryption
+ip ssh version 2
+
+line vty 0 4
+login local
+transport input all              //for SSH and telnet
+exit
+```
+<h3><b>WEB-1</b></h3>
+
+<h4><b>EIGRP ROUTING PROTOCOL</b></h4>
+
+```
+router eigrp 100
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ network 200.10.20.0 255.255.255.0
+exit
+```
+<h4><b>SSH</b></h4>
+
+```
+username admin secret cisco        //secret for md5 security
+ip domain-name web-1.com
+crypto key generate rsa
+1024                              //for encryption
+ip ssh version 2
+
+line vty 0 4
+login local
+transport input all              //for SSH and telnet remote access
+exit
+```
+<h3><b>WEB-2</b></h3>
+
+<h4><b>EIGRP ROUTING PROTOCOL</b></h4>
+
+```
+router eigrp 100
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ network 200.10.20.0 255.255.255.0
+exit
+```
+<h4><b>SSH</b></h4>
+
+```
+username admin secret cisco        //secret for md5 security
+ip domain-name web-2.com
+crypto key generate rsa
+1024                              //for encryption
+ip ssh version 2
+
+line vty 0 4
+login local
+transport input all              //for SSH and telnet
+exit
+```
+<h3><b>SERVER-1</b></h3>
+
+<h4><b>EIGRP ROUTING PROTOCOL</b></h4>
+
+```
+router eigrp 100
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ network 200.10.20.0 255.255.255.0
+exit
+
+```
+
+<h4><b>SSH</b></h4>
+
+```
+username admin secret cisco        //secret for md5 security
+ip domain-name server-1.com
+crypto key generate rsa
+1024                              //for encryption
+ip ssh version 2
+
+line vty 0 4
+login local
+transport input all              //to accept both SSH and telnet remote access
 exit
 ```
 <!--
